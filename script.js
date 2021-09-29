@@ -1,9 +1,18 @@
- //Module for gameBoard 
+//Module for gameBoard 
 
-const GameBoard = (() => { 
-    const board = []
-    const infoBoard = () => console.log(board)
-    return { 
+const GameBoard = (() => {
+    const board = [
+        "X", "X", "X",
+        "X", "X", "X",
+        "X", "X", "X"
+    ]
+    const infoBoard = () => {
+        const boardDiv = document.getElementById("GameBoard");
+        for (let i = 0; i < board.length; i++) {
+            boardDiv.children[i].innerHTML = board[i];
+        }  
+    }
+    return {
         board,
         infoBoard
     }
@@ -20,14 +29,15 @@ const DisplayController = (() => {
 
 //Factory for players
 
-const Player = (inputName) => {
+let Player = (inputName) => {
     const getName = () => inputName;
     const logName = () => console.log("The name of the player is: " + inputName);
-    return{
+    return {
         getName,
         logName
     }
 };
 console.log(DisplayController.board());
-const Player1 = Player("Adrian");
+let Player1 = Player("Adrian");
 Player1.logName();
+GameBoard.infoBoard();

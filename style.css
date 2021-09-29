@@ -1,0 +1,22 @@
+html, body{
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    background-color: #181a1b05;
+}
+
+.GameBoard-main{
+    margin: auto;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 10px;
+    row-gap: 10px;
+    background-color: black;
+    width: 500px;
+    height: 500px;
+}
+.GameBoard-cell{
+    background-color: green;
+}

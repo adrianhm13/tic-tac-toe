@@ -6,7 +6,18 @@ const GameBoard = (() => {
         "", "", "",
         "", "", ""
     ]
+    return {
+        board
+    }
+})();
+
+//Module for displayController
+
+const DisplayController = (() => {
+
     const boardDiv = document.getElementById("GameBoard");
+    const board = GameBoard.board
+
     const infoBoard = () => {
         for (let i = 0; i < board.length; i++) {
             boardDiv.children[i].innerHTML = board[i];
@@ -19,93 +30,73 @@ const GameBoard = (() => {
             })
         }
     }
-    const test = () => {
-        let hola
-        return hola = "hola"
-    }
 
     const addMarker = (i) => {
-
-        let firstTurn = false
-        if (firstTurn = false) {
-            let playerTurn = firstTurn();
-            firstTurn = true;
+        if (board[i] != "") {
+            console.log("Cell already taken")
         } else {
-            console.log(playerTurn.getName())
-            if (board[i] != "") {
-                console.log("Cell already taken")
-            } else {
-                board[i] = playerTurn.getSymbol()  //Replace for the variable which contains the X or O depending from the player
-                infoBoard();
-                console.log(board)
-                changeTurn(playerTurn)
-            }
+            const player = playerTurn();
+            board[i] = player.getSymbol()  //Replace for the variable which contains the X or O depending from the player
+            infoBoard();
+            console.log(board)
         }
+    }
+    const playerTurn = () => {
 
-
-
+        let playerTurn;
+        if (Player1.isPlaying == true) {
+            playerTurn = Player1;
+            Player1.isPlaying = false;
+            Player2.isPlaying = true;
+            console.log("The next move belongs to " + Player2.getName())
+        } else {
+            playerTurn = Player2;
+            Player1.isPlaying = true;
+            Player2.isPlaying = false;
+            console.log("The next move belongs to " + Player1.getName())
+        }
+        return playerTurn;
     }
     const firstTurn = () => {
         let randomStart = Math.floor(Math.random() * (2 - 0)) + 0;
-        let playerTurn;
-
+        let firstPlayer;
         if (randomStart === 0) {
-            playerTurn = Player1
+            Player1.isPlaying = true;
+            firstPlayer = Player1
         } else {
-            playerTurn = Player2
+            Player2.isPlaying = true;
+            firstPlayer = Player2
         }
-        console.log("The first turn its for: " + playerTurn.getName())
-        return playerTurn;
+        console.log("The first move belongs to " + firstPlayer.getName())
+        return firstPlayer;
     }
-    const changeTurn = (playerTurn) => {
-
-        let newTurn;
-        if (playerTurn.getName() == Player1.getName()) {
-            newTurn = Player2
-        } else {
-            newTurn = Player1
-        }
-        console.log("the turn has changed to: " + newTurn.getName());
-    }
-    const assignTurn = (playerAssignTurn) => {
-        let assignTurn = changeTurn()
-    }
-
 
     return {
-        board,
         infoBoard,
         addEvents,
         addMarker,
-        assignTurn,
-        test
-    }
-})();
-
-//Module for displayController
-
-const DisplayController = (() => {
-    const board = () => GameBoard.infoBoard();
-    return {
-        board,
+        firstTurn
     }
 })();
 
 //Factory for players
 
-let Player = (inputName, symbol) => {
+const Player = (inputName, symbol) => {
     const getName = () => inputName;
     const getSymbol = () => symbol;
     const logName = () => console.log("The name of the player is: " + inputName + " and it's playing " + symbol);
+    let isPlaying = false;
     return {
         getName,
         logName,
-        getSymbol
+        getSymbol,
+        isPlaying
     }
 };
-let Player1 = Player("Adrian", "X");
-let Player2 = Player("Jose", "O")
+const Player1 = Player("Adrian", "X");
+const Player2 = Player("Jose", "O");
 Player1.logName();
 Player2.logName();
-GameBoard.infoBoard();
-GameBoard.addEvents();
+DisplayController.infoBoard();
+DisplayController.addEvents();
+DisplayController.firstTurn();

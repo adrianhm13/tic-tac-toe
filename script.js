@@ -54,6 +54,7 @@ const DisplayController = (() => {
             boardDiv.children[i].setAttribute("mark", player.getSymbol())
             infoBoard();
             checkWin(i);
+            checkTie(board);
             console.log(board)
         }
     }
@@ -96,17 +97,25 @@ const DisplayController = (() => {
             const matching = winComb[i].filter(element => checkWinComb.includes(element))
             if(matching.length == winComb[i].length){
                 for (let j = 0; j < matching.length; j++) {
-                    if(board[matching[j]] == "X") {
+                    if(board[matching[j]] === "X") {
                         countCheckX = countCheckX + 1
-                        countCheckO = 0
                         winnerPlayer1 = (countCheckX == 3) ? alert("Winner player 1") : ""
-                    }else{
+                        //I MUST ADDD A FUNCTION FOR WINNER SO EVERYTHING STOP RUNNING
+                    }else if(board[matching[j]] === "O"){
                         countCheckO = countCheckO + 1
-                        countCheckX = 0
                         winnerPlayer2 = (countCheckO == 3) ? alert("Winner player 2") : ""
                     }
                 }
+                countCheckX = 0
+                countCheckO = 0
             }
+        }
+    }
+    const checkTie = (board) => {
+        const Tie = board => board.every(e => e != "");
+        console.log(Tie)
+        if (Tie(board) == true){
+            alert("its a tie")
         }
     }
     return {

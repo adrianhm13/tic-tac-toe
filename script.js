@@ -6,8 +6,20 @@ const GameBoard = (() => {
         "", "", "",
         "", "", ""
     ]
+    const winComb = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [6, 4, 2]
+    ]
+
     return {
-        board
+        board,
+        winComb,
     }
 })();
 
@@ -17,6 +29,8 @@ const DisplayController = (() => {
 
     const boardDiv = document.getElementById("GameBoard");
     const board = GameBoard.board
+    const winComb = GameBoard.winComb
+    const checkWinComb = [];
 
     const infoBoard = () => {
         for (let i = 0; i < board.length; i++) {
@@ -37,7 +51,9 @@ const DisplayController = (() => {
         } else {
             const player = playerTurn();
             board[i] = player.getSymbol()  //Replace for the variable which contains the X or O depending from the player
+            boardDiv.children[i].setAttribute("mark", player.getSymbol())
             infoBoard();
+            checkWin(i);
             console.log(board)
         }
     }
@@ -70,11 +86,27 @@ const DisplayController = (() => {
         console.log("The first move belongs to " + firstPlayer.getName())
         return firstPlayer;
     }
+    const checkWin = (i) => {
+        const getID = document.getElementById(i)
+        const getMark = getID.getAttribute("mark")
+        console.log(getID)
+        console.log(getMark)
+        checkWinComb.push(parseInt(getID.id));
 
+        for (let i = 0; i < winComb.length; i++) {
+            const matching = winComb[i].filter(element => checkWinComb.includes(element))
+            if(matching.length == winComb[i].length){
+                console.log("we may have a winner")
+            }else{
+                console.log("No matching")
+            }
+            console.log("hehe" + matching)
+        }
+    }
     return {
+        checkWin,
         infoBoard,
         addEvents,
-        addMarker,
         firstTurn
     }
 })();

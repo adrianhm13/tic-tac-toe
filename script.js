@@ -88,19 +88,25 @@ const DisplayController = (() => {
     }
     const checkWin = (i) => {
         const getID = document.getElementById(i)
-        const getMark = getID.getAttribute("mark")
-        console.log(getID)
-        console.log(getMark)
+        let countCheckX = 0;
+        let countCheckO = 0;
         checkWinComb.push(parseInt(getID.id));
 
         for (let i = 0; i < winComb.length; i++) {
             const matching = winComb[i].filter(element => checkWinComb.includes(element))
             if(matching.length == winComb[i].length){
-                console.log("we may have a winner")
-            }else{
-                console.log("No matching")
+                for (let j = 0; j < matching.length; j++) {
+                    if(board[matching[j]] == "X") {
+                        countCheckX = countCheckX + 1
+                        countCheckO = 0
+                        winnerPlayer1 = (countCheckX == 3) ? alert("Winner player 1") : ""
+                    }else{
+                        countCheckO = countCheckO + 1
+                        countCheckX = 0
+                        winnerPlayer2 = (countCheckO == 3) ? alert("Winner player 2") : ""
+                    }
+                }
             }
-            console.log("hehe" + matching)
         }
     }
     return {

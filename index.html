@@ -26,7 +26,7 @@
             <div class="GameBoard-cell cell-right" id="8"></div>
         </div>
     </div>
-    <div class="menu-setup">
+    <div id="menu" class="menu-setup">
         <div class="menu-content">
             <h2>Welcome to Tic-Tac-Toe</h2>
             <h4>The rules are simple, the first one making a 3 row wins</h4>
@@ -37,11 +37,11 @@
                 <input type="text" id="input-player2" name="input-player2">
             </div>
             <label for="submit-button"></label><br>
-            <input type="button" id="submit-button" name="submit-button" value="Submit">
+            <input type="button" id="submit-button" name="submit-button" value="Let's play!" onclick="DisplayController.getPlayersName(); DisplayController.menuHide(); DisplayController.initGame()">
         </div>
     </div>
     <script src="script.js"></script>
 </body>
-"
+
 
 </html>

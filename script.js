@@ -22,7 +22,20 @@ const GameBoard = (() => {
         winComb,
     }
 })();
+//Factory for players
 
+const Player = (inputName, symbol) => {
+    const getName = () => inputName;
+    const getSymbol = () => symbol;
+    const logName = () => console.log("The name of the player is: " + inputName + " and it's playing " + symbol);
+    let isPlaying = false;
+    return {
+        getName,
+        logName,
+        getSymbol,
+        isPlaying
+    }
+};
 //Module for displayController
 
 const DisplayController = (() => {
@@ -31,7 +44,8 @@ const DisplayController = (() => {
     const board = GameBoard.board
     const winComb = GameBoard.winComb
     const checkWinComb = [];
-
+    const Player1 = Player("", "X");
+    const Player2 = Player("", "O");
     const infoBoard = () => {
         for (let i = 0; i < board.length; i++) {
             boardDiv.children[i].innerHTML = board[i];
@@ -53,13 +67,13 @@ const DisplayController = (() => {
             board[i] = player.getSymbol()  //Replace for the variable which contains the X or O depending from the player
             boardDiv.children[i].setAttribute("mark", player.getSymbol())
             infoBoard();
-            if (checkWin(i) == true){
+            if (checkWin(i) == true) {
                 console.log("Not check Tie");
-            }else{
+            } else {
                 checkTie(board);
             }
 
-    
+
             console.log(board)
         }
     }
@@ -90,6 +104,8 @@ const DisplayController = (() => {
             firstPlayer = Player2
         }
         console.log("The first move belongs to " + firstPlayer.getName())
+        console.log(Player1.isPlaying)
+        console.log(Player2.isPlaying)
         return firstPlayer;
     }
     const checkWin = (i) => {
@@ -100,19 +116,19 @@ const DisplayController = (() => {
 
         for (let i = 0; i < winComb.length; i++) {
             const matching = winComb[i].filter(element => checkWinComb.includes(element))
-            if(matching.length == winComb[i].length){
+            if (matching.length == winComb[i].length) {
                 for (let j = 0; j < matching.length; j++) {
-                    if(board[matching[j]] === "X") {
+                    if (board[matching[j]] === "X") {
                         countCheckX = countCheckX + 1
                         winnerPlayer1 = (countCheckX == 3) ? endWinner(Player1) : false
-                    }else if(board[matching[j]] === "O"){
+                    } else if (board[matching[j]] === "O") {
                         countCheckO = countCheckO + 1
                         winnerPlayer2 = (countCheckO == 3) ? endWinner(Player2) : false
                     }
                 }
-                if (winnerPlayer1 == true){
+                if (winnerPlayer1 == true) {
                     return winnerPlayer1;
-                }else if (winnerPlayer2 == true){
+                } else if (winnerPlayer2 == true) {
                     return winnerPlayer2;
                 }
                 countCheckX = 0
@@ -126,36 +142,43 @@ const DisplayController = (() => {
     }
     const checkTie = (board) => {
         const Tie = board => board.every(e => e != "");
-        if (Tie(board) == true){
+        if (Tie(board) == true) {
             alert("its a tie")
         }
     }
+    const getPlayersName = () => {
+        const inputPlayer1 = document.getElementById("input-player1").value;
+        const inputPlayer2 = document.getElementById("input-player2").value;
+        Player1.getName = () => inputPlayer1;
+        Player2.getName = () => inputPlayer2;
+
+    }
+    const menuHide = () => {
+        const menu = document.getElementById("menu").classList.add("menu-hide");
+        const gameBoard = document.getElementById('GameBoard').classList.add("GameBoard-main-show");
+    }
+    const initGame = () => {
+        infoBoard();
+        addEvents();
+        firstTurn();
+    }
+
     return {
         checkWin,
         infoBoard,
         addEvents,
-        firstTurn
+        firstTurn,
+        Player1,
+        Player2,
+        getPlayersName,
+        menuHide,
+        initGame
     }
 })();
 
-//Factory for players
 
-const Player = (inputName, symbol) => {
-    const getName = () => inputName;
-    const getSymbol = () => symbol;
-    const logName = () => console.log("The name of the player is: " + inputName + " and it's playing " + symbol);
-    let isPlaying = false;
-    return {
-        getName,
-        logName,
-        getSymbol,
-        isPlaying
-    }
-};
-const Player1 = Player("Adrian", "X");
-const Player2 = Player("Jose", "O");
-Player1.logName();
-Player2.logName();
-DisplayController.infoBoard();
-DisplayController.addEvents();
-DisplayController.firstTurn();
+
+
+// DisplayController.infoBoard();
+// DisplayController.addEvents();
+// DisplayController.firstTurn();

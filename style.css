@@ -46,9 +46,12 @@ select {
     height: 500px;
     border-radius: 5px;
     visibility: hidden;
+    opacity: 0;
 }
 .GameBoard-main-show{
     visibility: visible;
+    transition: 1s;
+    opacity: 1;
 }
 .GameBoard-cell{
     font-family: 'Roboto', sans-serif;
@@ -101,6 +104,12 @@ select {
     font-size: 15px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+.menu-hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
 #submit-button{
     color: white;
     background-color: #f4a261;
@@ -110,10 +119,11 @@ select {
     font-size: 17px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
+    margin-top: 25px;
 }
 #submit-button:hover{
     background-color: #f88c33;
-    transition: 0.5s
+    transition: color 0.5s
 }
 .players-input{
     margin-top: 25px;
@@ -141,7 +151,10 @@ input{
     row-gap: 10px;
     background-color: #264653;
     border-radius: 5px;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
+}
+.players-input{
+    flex-direction:column;
 }
   }

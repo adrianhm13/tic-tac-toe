@@ -53,8 +53,13 @@ const DisplayController = (() => {
             board[i] = player.getSymbol()  //Replace for the variable which contains the X or O depending from the player
             boardDiv.children[i].setAttribute("mark", player.getSymbol())
             infoBoard();
-            checkWin(i);
-            checkTie(board);
+            if (checkWin(i) == true){
+                console.log("Not check Tie");
+            }else{
+                checkTie(board);
+            }
+
+    
             console.log(board)
         }
     }
@@ -99,21 +104,28 @@ const DisplayController = (() => {
                 for (let j = 0; j < matching.length; j++) {
                     if(board[matching[j]] === "X") {
                         countCheckX = countCheckX + 1
-                        winnerPlayer1 = (countCheckX == 3) ? alert("Winner player 1") : ""
-                        //I MUST ADDD A FUNCTION FOR WINNER SO EVERYTHING STOP RUNNING
+                        winnerPlayer1 = (countCheckX == 3) ? endWinner(Player1) : false
                     }else if(board[matching[j]] === "O"){
                         countCheckO = countCheckO + 1
-                        winnerPlayer2 = (countCheckO == 3) ? alert("Winner player 2") : ""
+                        winnerPlayer2 = (countCheckO == 3) ? endWinner(Player2) : false
                     }
+                }
+                if (winnerPlayer1 == true){
+                    return winnerPlayer1;
+                }else if (winnerPlayer2 == true){
+                    return winnerPlayer2;
                 }
                 countCheckX = 0
                 countCheckO = 0
             }
         }
     }
+    const endWinner = (winnerPlayer) => {
+        alert("The winner is: " + winnerPlayer.getName())
+        return true;
+    }
     const checkTie = (board) => {
         const Tie = board => board.every(e => e != "");
-        console.log(Tie)
         if (Tie(board) == true){
             alert("its a tie")
         }
